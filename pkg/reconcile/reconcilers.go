@@ -214,7 +214,7 @@ func newSchemaJob(reaper *api.Reaper) *v1batch.Job {
 								},
 								{
 									Name:  "CONTACT_POINTS",
-									Value: cassandra.CassandraService,
+									Value: getCassandraServiceName(reaper),
 								},
 								{
 									Name:  "REPLICATION",
@@ -346,7 +346,7 @@ func newDeployment(reaper *api.Reaper) *appsv1.Deployment {
 			},
 			{
 				Name:  "REAPER_CASS_CONTACT_POINTS",
-				Value: fmt.Sprintf("[%s]", reaper.Spec.ServerConfig.CassandraBackend.CassandraService),
+				Value: fmt.Sprintf("[%s]", getCassandraServiceName(reaper)),
 			},
 			{
 				Name:  "REAPER_AUTH_ENABLED",
@@ -394,6 +394,10 @@ func newDeployment(reaper *api.Reaper) *appsv1.Deployment {
 			},
 		},
 	}
+}
+
+func getCassandraServiceName(reaper *api.Reaper) string {
+	return reaper.Spec.ServerConfig.CassandraBackend.CassandraService + "." + reaper.Spec.ServerConfig.CassandraBackend.Namespace
 }
 
 func isDeploymentReady(deployment *appsv1.Deployment) bool {

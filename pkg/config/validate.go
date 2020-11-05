@@ -66,6 +66,10 @@ func (v *validator) SetDefaults(reaper *api.Reaper) bool {
 			updated = true
 		}
 
+		if len(cassandra.Namespace) == 0 {
+			cassandra.Namespace = reaper.Namespace
+		}
+
 		if cassandra.AuthProvider == (api.AuthProvider{}) {
 			cassandra.AuthProvider = api.AuthProvider{
 				Type:     "plainText",

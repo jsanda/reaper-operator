@@ -61,7 +61,7 @@ func TestNewSchemaJob(t *testing.T) {
 		},
 		{
 			Name:  "CONTACT_POINTS",
-			Value: reaper.Spec.ServerConfig.CassandraBackend.CassandraService,
+			Value: getCassandraServiceName(reaper),
 		},
 		{
 			Name:  "REPLICATION",
@@ -115,7 +115,7 @@ func TestNewDeployment(t *testing.T) {
 		},
 		{
 			Name:  "REAPER_CASS_CONTACT_POINTS",
-			Value: "[" + reaper.Spec.ServerConfig.CassandraBackend.CassandraService + "]",
+			Value: "[" + getCassandraServiceName(reaper) + "]",
 		},
 		{
 			Name:  "REAPER_AUTH_ENABLED",

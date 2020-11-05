@@ -68,6 +68,8 @@ type CassandraBackend struct {
 	// The headless service that provides endpoints for the StorageTypeCassandra pods
 	CassandraService string `json:"cassandraService" yaml:"contactPoints"`
 
+	Namespace string `json:"namespace,omitempty"`
+
 	// Defaults to reaper
 	Keyspace string `json:"keyspace,omitempty" yaml:"keyspace,omitempty"`
 

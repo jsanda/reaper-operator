@@ -60,6 +60,8 @@ spec:
                     keyspace:
                       description: Defaults to reaper
                       type: string
+                    namespace:
+                      type: string
                     replication:
                       description: Specifies the replication strategy for a keyspace
                       properties:

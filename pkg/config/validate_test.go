@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	api "github.com/thelastpickle/reaper-operator/api/v1alpha1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestValidate(t *testing.T) {
@@ -95,7 +96,11 @@ func TestSetDefaults(t *testing.T) {
 
 func TestSetDefaultsWithCassandraBackend(t *testing.T) {
 	validator := NewValidator()
+	namespace := "reaper-operator"
 	reaper := &api.Reaper{
+		ObjectMeta: metav1.ObjectMeta{
+			Namespace: namespace,
+		},
 		Spec: api.ReaperSpec{
 			ServerConfig: api.ServerConfig{
 				StorageType: api.StorageTypeCassandra,
@@ -111,6 +116,10 @@ func TestSetDefaultsWithCassandraBackend(t *testing.T) {
 	}
 
 	cfg := reaper.Spec.ServerConfig
+
+	if (*cfg.CassandraBackend).Namespace != namespace {
+		t.Errorf("Namespace (%s) is not the expected value (%s)", (*cfg.CassandraBackend).Namespace, namespace)
+	}
 
 	if (*cfg.CassandraBackend).Keyspace != api.DefaultKeyspace {
 		t.Errorf("Keyspace (%s) is not the expectedAuthProvider value (%s)", (*cfg.CassandraBackend).Keyspace, api.DefaultKeyspace)
