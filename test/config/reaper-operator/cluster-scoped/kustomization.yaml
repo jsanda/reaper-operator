@@ -5,5 +5,10 @@ resources:
 
 namespace: reaper-operator
 
+images:
+- name: controller
+  newName: docker.io/thelastpickle/reaper-operator
+  newTag: latest
+
 patchesStrategicMerge:
 - reaper-operator-patch.yaml
