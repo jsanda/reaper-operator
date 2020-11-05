@@ -10,5 +10,10 @@ images:
   newName: docker.io/thelastpickle/reaper-operator
   newTag: latest
 
-patchesStrategicMerge:
-- reaper-operator-patch.yaml
+patches:
+- path: reaper-operator-patch.json
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: reaper-operator

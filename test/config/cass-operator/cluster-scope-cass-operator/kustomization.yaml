@@ -4,5 +4,10 @@ resources:
 
 namespace: cass-operator
 
-patchesStrategicMerge:
-- cass-operator-patch.yaml
+patches:
+- path: cass-operator-patch.json
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: cass-operator
