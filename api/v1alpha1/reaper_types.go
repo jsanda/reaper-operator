@@ -35,6 +35,14 @@ const (
 	DefaultStorageType = StorageTypeMemory
 )
 
+type JmxUserSecretRef struct {
+	// The name of the secret
+	Name string `json:"name"`
+
+	// If omitted, the Reaper namespace is used.
+	Namespace string `json:"namespace,omitempty"`
+}
+
 type ServerConfig struct {
 	StorageType StorageType `json:"storageType,omitempty"`
 
@@ -42,7 +50,7 @@ type ServerConfig struct {
 
 	// Defines the username and password that Reaper will use to authenticate JMX connections to Cassandra
 	// clusters. These credentials need to be stored on each Cassandra node.
-	JmxUserSecretName string `json:"jmxUserSecretName,omitempty"`
+	JmxUserSecret *JmxUserSecretRef `json:"jmxUserSecret,omitempty"`
 }
 
 // Specifies the replication strategy for a keyspace

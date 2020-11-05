@@ -259,8 +259,9 @@ func (r *defaultReconciler) ReconcileDeployment(ctx context.Context, req ReaperR
 		// create the deployment
 		deployment = newDeployment(reaper)
 
-		if len(reaper.Spec.ServerConfig.JmxUserSecretName) > 0 {
-			secret, err := r.getSecret(types.NamespacedName{Namespace: reaper.Namespace, Name: reaper.Spec.ServerConfig.JmxUserSecretName})
+		if isJmxAuthEnabled(reaper) {
+			secretKey := getJmxAuthSecretRefKey(reaper)
+			secret, err := r.getSecret(secretKey)
 			if err != nil {
 				req.Logger.Error(err, "failed to get jmxUserSecret", "deployment", key)
 				return &ctrl.Result{RequeueAfter: 10 * time.Second}, err
@@ -295,6 +296,18 @@ func (r *defaultReconciler) ReconcileDeployment(ctx context.Context, req ReaperR
 	}
 
 	return nil, nil
+}
+
+func isJmxAuthEnabled(reaper *api.Reaper) bool {
+	return reaper.Spec.ServerConfig.JmxUserSecret != nil
+}
+
+func getJmxAuthSecretRefKey(reaper *api.Reaper) types.NamespacedName {
+	if len(reaper.Spec.ServerConfig.JmxUserSecret.Namespace) == 0 {
+		return types.NamespacedName{Namespace: reaper.Namespace, Name: reaper.Spec.ServerConfig.JmxUserSecret.Name}
+	} else {
+		return types.NamespacedName{Namespace: reaper.Spec.ServerConfig.JmxUserSecret.Namespace, Name: reaper.Spec.ServerConfig.JmxUserSecret.Name}
+	}
 }
 
 func addJmxAuthEnvVars(deployment *appsv1.Deployment, usernameEnvVar, passwordEnvVar *corev1.EnvVar) {
