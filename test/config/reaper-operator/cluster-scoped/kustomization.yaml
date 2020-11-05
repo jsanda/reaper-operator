@@ -1,0 +1,9 @@
+resources:
+- namespace.yaml
+- ../base
+- ../../../../config/cluster-rbac
+
+namespace: reaper-operator
+
+patchesStrategicMerge:
+- reaper-operator-patch.yaml

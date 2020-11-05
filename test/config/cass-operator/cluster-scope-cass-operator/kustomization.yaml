@@ -1,0 +1,8 @@
+resources:
+  - namespace.yaml
+  - ../base
+
+namespace: cass-operator
+
+patchesStrategicMerge:
+- cass-operator-patch.yaml

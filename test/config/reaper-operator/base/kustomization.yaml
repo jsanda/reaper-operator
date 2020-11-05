@@ -1,0 +1,7 @@
+resources:
+- ../../../../config/crd
+- ../../../../config/rbac
+- ../../../../config/manager
+
+patchesStrategicMerge:
+- reaper-operator-patch.yaml

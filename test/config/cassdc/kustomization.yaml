@@ -1,12 +1,3 @@
 resources:
-- cassdc.yaml
+- base
 
-generatorOptions:
-  disableNameSuffixHash: true
-
-secretGenerator:
-  - name: reaper-jmx
-    literals:
-    - username=reaper
-    - password=reaper
-    type: Opaque
