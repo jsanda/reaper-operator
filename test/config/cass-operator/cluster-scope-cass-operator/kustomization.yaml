@@ -1,13 +1,13 @@
 resources:
   - namespace.yaml
-  - ../base
+  - cass-operator.yaml
 
 namespace: cass-operator
 
-patches:
-- path: cass-operator-patch.json
-  target:
-    group: apps
-    version: v1
-    kind: Deployment
-    name: cass-operator
+images:
+  # Until cass-operator 1.5 is released, we need to use a more recent image than 1.4.1 in
+  # order to get the merge functionality for containers specified in
+  # CassandraDatacenter.Spec.PodTemplateSpec.
+  - name: datastax/cass-operator
+    newName: jsanda/cass-operator
+    newTag: a75754989cd29a38dd6406fdb75a5bad010f782d
