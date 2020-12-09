@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - gh-actions-debug
 
   pull_request:
     branches: [ master ]
