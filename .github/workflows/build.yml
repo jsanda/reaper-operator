@@ -42,4 +42,5 @@ jobs:
       - name: Build and push image
 #        if: github.ref == 'refs/heads/build-image'
         if: github.ref == 'refs/heads/gh-action-debug'
-        run: make docker-build docker-push
+#        run: make docker-build docker-push
+        run: echo "BUILDING AND PUSHING IMAGE"
